@@ -13,7 +13,7 @@ public interface GitHubService {
 
     String END_POINT = "https://api.github.com";
 
-    @GET("users/{username}?token=6716f56bafc7877ba5c040aadfcecb77a295d0fb")
+    @GET("users/{username}")
     Call<User> getUser(@Path("username") String username);
 
 
