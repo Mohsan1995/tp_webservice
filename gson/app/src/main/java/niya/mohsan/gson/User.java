@@ -1,5 +1,7 @@
 package niya.mohsan.gson;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by mohsan on 10/05/16.
  */
@@ -7,13 +9,14 @@ public class User {
 
     public String name;
     public String login;
-    public String avatar_url;
+    @SerializedName("avatar_url")
+    public String avatarUrl;
     public String followers;
 
-    public User(String name, String login, String avatar_url, String followers) {
+    public User(String name, String login, String avatarUrl, String followers) {
         this.name = name;
         this.login = login;
-        this.avatar_url = avatar_url;
+        this.avatarUrl = avatarUrl;
         this.followers = followers;
     }
 
@@ -25,8 +28,8 @@ public class User {
         return login;
     }
 
-    public String getAvatar_url() {
-        return avatar_url;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
     public String getFollowers() {
