@@ -23,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
 
     TextView name,login,avatar_url,followers;
 
+    //only 1 instance
+    OkHttpClient client;
+    Gson gson;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
         avatar_url = (TextView) findViewById(R.id.avatar_url);
         followers = (TextView) findViewById(R.id.followers);
 
-        OkHttpClient client = new OkHttpClient();
+        this.client = new OkHttpClient();
+        this.gson = new GsonBuilder().create();
+
         final Request request = new Request.Builder()
                 .url(URL_GITHUB)
                 .build();
@@ -47,13 +53,9 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 final String body = response.body().string();
 
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        GsonBuilder gsonBuilder = new GsonBuilder();
-                        Gson gson = gsonBuilder.create();
-
                         User user = gson.fromJson(body,User.class);
 
                         System.out.println(user.getName());
@@ -61,11 +63,11 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, user.getName(), Toast.LENGTH_SHORT).show();
                         Toast.makeText(MainActivity.this, user.getFollowers(), Toast.LENGTH_SHORT).show();
                         Toast.makeText(MainActivity.this, user.getLogin(), Toast.LENGTH_SHORT).show();
-                        Toast.makeText(MainActivity.this, user.getAvatar_url(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, user.getAvatarUrl(), Toast.LENGTH_SHORT).show();
                         name.setText(user.getName());
                         login.setText(user.getLogin());
                         followers.setText(user.getFollowers());
-                        avatar_url.setText(user.getAvatar_url());
+                        avatar_url.setText(user.getAvatarUrl());
                     }
                 });
             }
